@@ -1,6 +1,6 @@
 ## npm install
 
-### rename ".env.example" to ".env" and put your bot token
+### rename ".env.example" to ".env" and put your bot token and mongoDB URL
 
 ### config.json
 

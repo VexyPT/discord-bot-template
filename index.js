@@ -1,10 +1,4 @@
-process.on("uncaughtException", (err) => {
-	console.log("ERROR: Uncaught Exception:\n" + err);
-});
-process.on("unhandledRejection", (reason, promise) => {
-    console.log("ERROR: Rejeição possivelmente não tratada em:\n" + "promisse:\n" + promise + "\nmotivo:\n" + reason.message);
-});
-
+const mongoose = require("mongoose");
 const { Client, Collection, Partials, GatewayIntentBits, WebhookClient, EmbedBuilder } = require("discord.js");
 const handler = require("./handler/index.js");
 require('dotenv').config();
@@ -40,9 +34,7 @@ const client = new Client({
 
 module.exports = client;
 
-const Discord = require("discord.js");
-
-client.discord = Discord;
+client.userDB = require("./schemas/User.js");
 client.commands = new Collection();
 client.slash = new Collection();
 client.config = require('./config.json');
@@ -75,7 +67,16 @@ client.on('interactionCreate', async (interaction) => {
 });
 // -------------------------------------
 
-
+process.on("uncaughtException", (err) => {
+	console.log("Error: Uncaught Exception:\n" + err);
+});
+process.on("unhandledRejection", (reason, promise) => {
+    console.log("Error: unhandledRejection\n" + promise + "\nreason:\n" + reason.message);
+});
 
 // Login
 client.login(process.env.clientToken);
+
+// MongoDB Connection
+mongoose.connect(process.env.mongodbToken)
+  .then(() => { console.log("MongoDB Connected") })

@@ -19,8 +19,8 @@ module.exports = {
                 return interaction.reply({ content: "❌ This command is only for my developer", ephemeral: true });
             }
         }
-        if (interaction.channel.type === ChannelType.DM) {
-            return interaction.reply({ content: `❌ Use meus comandos apenas em servidores`, ephemeral: true })
+        if (interaction.channel.type === ChannelType.DM) { // Delete this if you want to be able to use commands in private messages
+            return interaction.reply({ content: `❌ I don't support DM Commands`, ephemeral: true })
         }
         
         const args = [];
